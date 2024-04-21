@@ -1,35 +1,47 @@
 require 'yaml'
 
+# Load inventory from YAML file
 inventory = YAML.load_file(File.join(__dir__, 'inventory.yml'))
 
+# Configuration variables
 vm_box = "generic/ubuntu2204"
-default_interface = "Intel(R) Wi-Fi 6 AX201 160MHz"
-# default_interface = "Intel(R) Ethernet Connection (13) I219-LM"
+default_interface = "virbr0"  # Bridge interface
 
 Vagrant.configure("2") do |config|
   inventory['all']['children'].each do |group, properties|
     properties['hosts'].each do |host, host_vars|
       config.vm.define host do |node|
         node.vm.box = vm_box
-        node.vm.network "public_network", bridge: default_interface, ip: host_vars['ansible_host']
-        # node.vm.network "public_network", bridge: default_interface # IP assigned via DHCP
         node.vm.hostname = host
-        # node.vm.disk :disk, size: disk_size, primary: true
-        node.vm.provider "virtualbox" do |v|
+
+        # Setup public network; use a bridge with the default interface
+        # If host_vars['ansible_host'] is undefined or nil, it will use DHCP automatically
+        if host_vars.key?('ansible_host') && !host_vars['ansible_host'].nil?
+          node.vm.network "private_network", bridge: default_interface, ip: host_vars['ansible_host']
+        else
+          node.vm.network "private_network", bridge: default_interface  # DHCP
+        end
+
+        # Configure libvirt provider specifics
+        node.vm.provider "libvirt" do |v|
           v.memory = host_vars['memory']
           v.cpus = host_vars['cpu']
-          v.name = host
+          # Additional disks can be added here if uncommented
+          # v.storage :file, :size => '40G', :type => 'qcow2'
         end
       end
     end
   end
 
+  # Timezone plugin configuration
   if Vagrant.has_plugin?("vagrant-timezone")
     config.timezone.value = :host
   end
 
-  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/me.pub"
+  # SSH key provisioning
+  config.vm.provision "file", source: "#{ENV['HOME']}/.ssh/id_new.pub", destination: "~/.ssh/me.pub"
 
+  # Append public key to authorized_keys on the guest machine
   config.vm.provision "shell", inline: <<-SHELL
     cat /home/vagrant/.ssh/me.pub >> /home/vagrant/.ssh/authorized_keys
   SHELL
