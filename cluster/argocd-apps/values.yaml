@@ -1,5 +1,5 @@
 source:
-  repoUrl: https://github.com/erykio/k3s-virtualbox.git
+  repoUrl: https://github.com/erykio/k3s-libvirt.git
   revision: master
 
 apps:

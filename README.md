@@ -1,4 +1,4 @@
-# k3s-virtualbox
+# k3s-libvirt
 This project makes it easy to create single- and multi-node [k3s cluster](https://k3s.io) in VirtualBox, e.g. for local development on Kubernetes.
 
 My inspirations for this project:
@@ -38,14 +38,14 @@ flowchart LR
 
 | Demo                                                                                        |
 | :--:                                                                                        |
-| [![][virtualbox-demo]][homepage-demo]                                                       |
+| [![][libvirt-demo]][homepage-demo]                                                       |
 | Virtual machines created via [Vagrant](https://www.vagrantup.com/)                          |
 | [![][homepage-demo]][homepage-demo]                                                         |
 | Homepage with Ingress discovery powered by [Hajimari](https://hajimari.io/)                 |
 | [![][argocd-demo]][argocd-demo]                                                             |
 | Continuous deployment with [ArgoCD](https://argoproj.github.io)                             |
 
-[virtualbox-demo]: images/virtualbox.png
+[libvirt-demo]: images/libvirt.png
 [homepage-demo]: images/hajimari.png
 [argocd-demo]: images/argocd.png
 
@@ -79,7 +79,7 @@ worker1   Ready    v1.25.0+k3s1   192.168.0.202    Ubuntu 22.04.1 LTS    contain
 
 # Usage
 The cluster is ready. Now you can deploy some apps.
-- `make argocd` - deploy ArgoCD, wait for it be ready and then configure it to deploy apps declared inside the [cluster/apps folder](https://github.com/erykio/k3s-virtualbox/tree/master/cluster/apps)
+- `make argocd` - deploy ArgoCD, wait for it be ready and then configure it to deploy apps declared inside the [cluster/apps folder](https://github.com/erykio/k3s-libvirt/tree/master/cluster/apps)
 - wait until argocd deploys metallb and ingress
 - when `make ingressip` returns `192.168.0.200` then you should be able to access:
     - [The cluster homepage](http://home.192-168-0-200.nip.io/)
@@ -102,7 +102,7 @@ The cluster is ready. Now you can deploy some apps.
     </tr>
     <tr>
         <td><img width="32" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Virtualbox_logo.png/121px-Virtualbox_logo.png"></td>
-        <td><a href="https://www.virtualbox.org/">VirtualBox</a></td>
+        <td><a href="https://www.libvirt.org/">VirtualBox</a></td>
         <td>Virtualization</td>
     </tr>
     <tr>
