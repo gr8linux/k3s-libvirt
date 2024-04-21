@@ -1,7 +1,8 @@
 # k3s-libvirt
-This project makes it easy to create single- and multi-node [k3s cluster](https://k3s.io) in VirtualBox, e.g. for local development on Kubernetes.
+This project makes it easy to create single- and multi-node [k3s cluster](https://k3s.io) in Libvirt, e.g. for local development on Kubernetes.
 
 My inspirations for this project:
+- [k3s-virtualbox](https://github.com/erykio/k3s-virtualbox) (Lots of the code is forked from this repo most of effort was on Libvirt compatiblity)
 - [k3d](https://github.com/k3d-io/k3d) (the idea is pretty similar, but it uses containers which are much more lightweight compared to virtual machines)
 - [khuedoan/homelab](https://github.com/khuedoan/homelab) (uses physical servers as nodes)
 
