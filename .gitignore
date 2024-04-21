@@ -1,4 +1,5 @@
 **/.vagrant*
+**/.vscode*
 kubeconfig
 k3sup
 /.idea
