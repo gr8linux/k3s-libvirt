@@ -18,7 +18,7 @@
         - "{{ lookup('env', 'KUBECONFIG') }}"
         - --merge
         - --context
-        - "k3s-virtualbox"
+        - "k3s-libvirt"
         - --ip
         - "{{ hostvars[item].ansible_host }}"
         - --user
