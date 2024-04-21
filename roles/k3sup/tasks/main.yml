@@ -12,9 +12,9 @@
     command:
     args:
       argv:
-        - k3sup
+        - ./k3sup
         - install
-        - --local-path
+        #- --local-path ./kubeconfig
         - "{{ lookup('env', 'KUBECONFIG') }}"
         - --merge
         - --context
@@ -34,7 +34,7 @@
     command:
     args:
       argv:
-        - k3sup
+        - ./k3sup
         - join
         - --ip
         - "{{ hostvars[item].ansible_host }}"
