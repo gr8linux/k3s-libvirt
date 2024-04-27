@@ -16,7 +16,7 @@
         - install
         #- --local-path ./kubeconfig
         - "{{ lookup('env', 'KUBECONFIG') }}"
-        - --merge
+        #- --merge
         - --context
         - "k3s-libvirt"
         - --ip
